@@ -23,7 +23,8 @@ from IPython.display import Markdown
 app = Flask (__name__)
 
 # Gen AI
-GOOGLE_API_KEY='AIzaSyDFxvclv2l01Sm_S2gPuyxIoNsyVg0vSGo'
+# Replace with your api key
+GOOGLE_API_KEY='YOUR API KEY'
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # Vertex
