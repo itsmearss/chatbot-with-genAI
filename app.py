@@ -27,10 +27,6 @@ app = Flask (__name__)
 GOOGLE_API_KEY='YOUR API KEY'
 genai.configure(api_key=GOOGLE_API_KEY)
 
-# Vertex
-vertexai.init(project="build-with-ai-jkt-2024", location="us-west1")
-model = GenerativeModel("gemini-1.0-pro-001")
-
 model_genai_text = genai.GenerativeModel('gemini-1.0-pro')
 model_genai_image = genai.GenerativeModel('gemini-pro-vision')
 model_genai_chat = genai.GenerativeModel('gemini-pro')
@@ -38,24 +34,6 @@ model_genai_chat = genai.GenerativeModel('gemini-pro')
 def to_markdown(text):
   text = text.replace('•', '  *')
   return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
-
-def generate(user_input):
-    responses = model.generate_content(
-        contents=user_input,
-            generation_config={
-            "max_output_tokens": 2048,
-            "temperature": 0.9,
-            "top_p": 1
-        },
-        safety_settings={
-            generative_models.HarmCategory.HARM_CATEGORY_HATE_SPEECH: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            generative_models.HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
-            generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT: generative_models.HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE
-        }, 
-        stream=True,
-    )
-    return responses
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
